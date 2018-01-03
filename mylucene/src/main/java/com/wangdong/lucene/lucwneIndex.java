@@ -14,8 +14,7 @@ import org.apache.lucene.util.Version;
 import org.junit.Test;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import java.io.File;
-import java.io.StringReader;
+import java.io.*;
 
 /**
  * @author 汪冬
@@ -29,9 +28,11 @@ public class lucwneIndex {
 
 		try {
 			// 模拟一条数据库中的记录
-			Article artical = new Article(1, "Lucene全文检索框架",
-					"Lucene现货黄金", "田守枝");
-
+			Article artical = new Article(1, "Lucene全文检索框架", "Lucene现货黄金", "田守枝");
+			File file=new File("C:\\Users\\SY\\Desktop\\codeList.txt");
+			//获取读取流
+			FileReader reader = new FileReader("C:\\Users\\SY\\Desktop\\codeList.txt");
+			BufferedReader br = new BufferedReader(reader);
 			// 建立索引
 			// 1、把Article转换为Doucement对象
 			Document doc = new Document();
@@ -57,7 +58,7 @@ public class lucwneIndex {
 	}
 
 
-	@Test
+/*	@Test
 	public void test() {
 		try {
 			Analyzer analyzer = new StandardAnalyzer();
@@ -85,12 +86,12 @@ public class lucwneIndex {
 		//中文分词
 		String text = "传智播客：Lucene是全文检索的框架";
 
-/*        //单字分词StandardAnalyzer、ChineseAnalyzer
+*//*        //单字分词StandardAnalyzer、ChineseAnalyzer
         Analyzer analyzer=new StandardAnalyzer(Version.LUCENE_30);//也是单字分词
         Analyzer analyzer2=new ChineseAnalyzer();//也是单字分词
 
         //相连的两个字组合在一起
-        Analyzer analyzer3=new CJKAnalyzer(Version.LUCENE_30);*/
+        Analyzer analyzer3=new CJKAnalyzer(Version.LUCENE_30);*//*
 
 		//词库分词IKAnalyzer
 		Analyzer analyzer = new IKAnalyzer();
@@ -98,13 +99,13 @@ public class lucwneIndex {
 		testAnalyzer(analyzer, text);
 	}
 
-	/**
+	*//**
 	 * 使用指定的分词器对指定的文本进行分词，并打印结果--不需要掌握
 	 *
 	 * @param analyzer
 	 * @param text
 	 * @throws Exception
-	 */
+	 *//*
 	public void testAnalyzer(Analyzer analyzer, String text) throws Exception {
 		System.out.println("当前使用的分词器：" + analyzer.getClass());
 
@@ -117,5 +118,5 @@ public class lucwneIndex {
 		}
 
 
-	}
+	}*/
 }
