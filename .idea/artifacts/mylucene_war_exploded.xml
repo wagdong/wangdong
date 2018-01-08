@@ -20,6 +20,7 @@
           <element id="library" level="project" name="Maven: org.ow2.asm:asm:4.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:4.1" />
           <element id="library" level="project" name="Maven: com.janeluo:ikanalyzer:2012_u6" />
+          <element id="library" level="project" name="Maven: com.belerweb:pinyin4j:2.5.0" />
           <element id="library" level="project" name="Maven: junit:junit:4.9" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.1" />
           <element id="library" level="project" name="Maven: com.thihy:elasticsearch-analysis-paoding:1.4.2.1" />

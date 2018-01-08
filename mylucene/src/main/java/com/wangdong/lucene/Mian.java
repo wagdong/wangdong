@@ -17,6 +17,7 @@ import java.io.File;
 
 
 /**
+ * 基于文件的持久化索引  内存 数据库索引等
  * @author 汪冬
  * @Date 2018/1/2
  */
@@ -25,7 +26,7 @@ public class Mian {
 	public static void main(String[] args) {
 		try {
 			// 搜索条件(不区分大小写)
-			String queryString = "现黄";
+			String queryString = "表示";
 			// 进行搜索得到结果
 			Directory directory = FSDirectory.open(new File(lucwneIndex.indexPath));// 索引库目录
 			Analyzer analyzer = new StandardAnalyzer();
@@ -46,7 +47,8 @@ public class Mian {
 				int docId = scoreDoc.doc; // Document在数据库的内部编号(是唯一的，由lucene自动生成)
 				// 根据编号取出真正的Document数据
 				Document doc = indexSearcher.doc(docId);
-				doc.getField("content").stringValue();
+
+				System.out.println(doc.getField("content").stringValue());
 				Integer.parseInt(doc.getField("id").stringValue());
 			}
 			indexReader.close();

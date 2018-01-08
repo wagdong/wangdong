@@ -9,6 +9,7 @@ import org.apache.lucene.document.LongField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -39,11 +40,12 @@ public class lucwneIndex {
 			//根据实际情况，使用不同的Field来对原始内容建立索引， Store.YES表示是否存储字段原始内容
 			doc.add(new LongField("id", 123456789l, Field.Store.YES));
 			doc.add(new TextField("content", "Store.YES表示是否存储字段原始内容", Field.Store.YES));
-			indexWriter.addDocument(doc);
+			Term term = new Term(indexPath,"123456789l");
+			indexWriter.updateDocument(term,doc);
 			indexWriter.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			indexWriter.close();
+			/*indexWriter.close();*/
 		}
 
 	}
@@ -58,7 +60,7 @@ public class lucwneIndex {
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(Version.LATEST, analyzer);
 		//索引写入 并发问题字全局控制一个写索引  IndexSearcher,它是从索引库中获取数据的，不涉及对索引库中内容的增删改，所以IndexSearcher没有并发问题
 		indexWriter = new IndexWriter(directory, indexWriterConfig);
-		indexWriter.close();
+
 		//多线程并发问题模拟下面程序开启了多个IndexWriter，都没有关闭，执行结果抛出异常：
 		List<Runnable> runnableList=new ArrayList<>();
 		for (int i = 0; i < 9; i++) {
