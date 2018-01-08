@@ -3,10 +3,7 @@ package com.wangdong.lucene;
 import com.wangdong.lucene.concurrent.Simulation;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.LongField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
@@ -28,7 +25,7 @@ public class lucwneIndex {
 
 	public static String indexPath = "C:\\Users\\SY\\Desktop\\indexDir\\";
 	static  IndexWriter indexWriter=null;//help gc
-	public void makeIndex() throws IOException {
+	public  void  makeIndex() throws IOException {
 
 		try {
 			//获取读取流
@@ -38,9 +35,10 @@ public class lucwneIndex {
 			//Doucement对象
 			Document doc = new Document();
 			//根据实际情况，使用不同的Field来对原始内容建立索引， Store.YES表示是否存储字段原始内容
-			doc.add(new LongField("id", 123456789l, Field.Store.YES));
+			doc.add(new StringField("id", "123456789", Field.Store.YES));
 			doc.add(new TextField("content", "Store.YES表示是否存储字段原始内容", Field.Store.YES));
-			Term term = new Term(indexPath,"123456789l");
+			Term term = new Term("id","123456789");
+			indexWriter.deleteDocuments(term);
 			indexWriter.updateDocument(term,doc);
 			indexWriter.commit();
 		} catch (Exception e) {
@@ -76,7 +74,6 @@ public class lucwneIndex {
 					}
 				}
 			};
-			Simulation.getExec().submit(runnable);
 			runnableList.add(runnable);
 		}
 		Simulation.simulationLoad(runnableList);

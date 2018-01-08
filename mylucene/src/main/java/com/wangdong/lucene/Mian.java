@@ -40,6 +40,7 @@ public class Mian {
 			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 			TopDocs topDocs = indexSearcher.search(query, 100);// 根据指定查询条件查询，只返回前n条结果
 			int count = topDocs.totalHits;// 总结果数
+			System.out.println(count+"count");
 			ScoreDoc[] scoreDocs = topDocs.scoreDocs;// 按照得分进行排序后的前n条结果的信息
 			// 3、处理中间结果
 			for (ScoreDoc scoreDoc : scoreDocs) {
@@ -47,6 +48,8 @@ public class Mian {
 				int docId = scoreDoc.doc; // Document在数据库的内部编号(是唯一的，由lucene自动生成)
 				// 根据编号取出真正的Document数据
 				Document doc = indexSearcher.doc(docId);
+				System.out.println(docId);
+				System.out.println(score);
 
 				System.out.println(doc.getField("content").stringValue());
 				Integer.parseInt(doc.getField("id").stringValue());
