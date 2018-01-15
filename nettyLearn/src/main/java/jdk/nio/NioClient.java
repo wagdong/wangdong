@@ -20,7 +20,7 @@ public class NioClient {
 	}
 
 	public static void client() {
-		for (int i=0;i<1;i++){
+		for (int i=0;i<100;i++){
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -78,6 +78,7 @@ public class NioClient {
 								System.out.println(s);
 								output.close();
 							}
+
 						}
 
 						if (key.isWritable()) {
@@ -85,9 +86,6 @@ public class NioClient {
 							//ch.write(ByteBuffer.wrap((("client say:hi")).getBytes()));
 						}
 					}
-				}
-				if(key1){
-					break;
 				}
 			}
 		} catch (Exception e) {

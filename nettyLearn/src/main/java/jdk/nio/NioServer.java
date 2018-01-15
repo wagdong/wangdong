@@ -2,6 +2,7 @@ package jdk.nio;
 
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -14,6 +15,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * nio 理解
+ * selector channel buffer
+ * 通道 双工   区别传统io  单向
  * @author 汪冬
  * @Date 2018/1/12
  */
@@ -43,15 +47,9 @@ public class NioServer {
 			channel1.bind(new InetSocketAddress(8021));
 			channel1.register(selector, SelectionKey.OP_ACCEPT, new Integer(2));
 
-
+			//selector 管理了channel channel1 两条通道
 			System.out.println(selector.keys().size());
 
-			/*System.out.println("interestOps=" + register.interestOps());
-			boolean isInterestedInWrite = (register.interestOps() & SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE;
-			System.out.println(isInterestedInWrite);
-			Set<SelectionKey> selectionKeys = selector.selectedKeys();
-			System.out.println(selectionKeys.size());
-*/
 
 			while (true) {
 				if (selector.select() > 0) {
@@ -59,6 +57,7 @@ public class NioServer {
 					Iterator<SelectionKey> keys = sets.iterator();
 					while (keys.hasNext()) {
 						SelectionKey key = keys.next();
+						//SelectionKey  包含了通道的信息
 						keys.remove();
 
 						if (key.isAcceptable()) {
@@ -68,36 +67,36 @@ public class NioServer {
 							schannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 						}
 
+						//Tests whether this key's channel is ready for reading.
+						//猜测底层tcp 推送信息的时候 会改变底层的状态
 						if (key.isReadable()) {
 							SocketChannel schannel = (SocketChannel) key.channel();
-							ByteBuffer allocate = ByteBuffer.allocate(1024);
-							ByteOutputStream output = new ByteOutputStream();
-						/*	int len = 0;
-							while ((len = schannel.read(buf)) != 0) {
-								buf.flip();
-								byte by[] = new byte[buf.remaining()];
-								buf.get(by);
+							//通道到缓存
+							ByteArrayOutputStream output = new ByteArrayOutputStream();
+							ByteBuffer buffer = ByteBuffer.allocate(1024);
+							int len = 0;
+							while ((len = schannel.read(buffer)) != 0) {
+								buffer.flip();
+								byte by[] = new byte[buffer.remaining()];
+								buffer.get(by);
 								output.write(by);
-								buf.clear();
-							}*/
-							String str = new String(output.getBytes());
-							System.out.println(str);
-							key.attach(str);
-							//TimeUnit.SECONDS.sleep(1);
+								buffer.clear();
+							}
+							String s = new String(output.toByteArray());
+							System.out.println(s);
+							//耗时会影响链接？？？
+							Thread.sleep(100l);
 
-						}
-
-						if (key.isWritable()) {
-
-							/*Object object = key.attachment();
-							String attach = "chinese";
-							TimeUnit.SECONDS.sleep(1);
-
-							schannel.write(ByteBuffer.wrap(attach.getBytes()));*/
-							SocketChannel schannel = (SocketChannel) key.channel();
+					/*		TimeUnit.SECONDS.sleep(1);*/
 							String attach = "chinese";
 							schannel.write(ByteBuffer.wrap(attach.getBytes()));
 						}
+
+						/*if (key.isWritable()) {
+							SocketChannel schannel = (SocketChannel) key.channel();
+							String attach = "chinese";
+							schannel.write(ByteBuffer.wrap(attach.getBytes()));
+						}*/
 					}
 				}
 			}
