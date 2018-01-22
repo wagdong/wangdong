@@ -16,7 +16,7 @@ public class Simulation {
 	static final CountDownLatch begin = new CountDownLatch(count); //为0时开始执行
 	static  final ExecutorService exec = Executors.newFixedThreadPool(9);
 	public static void simulationLoad(List<Runnable> runnableList) throws InterruptedException {
-		runnableList.stream().forEach(run ->{
+	/*	runnableList.stream().forEach(run ->{
 			exec.submit(run);
 		});
 		System.out.println("开始执行");
@@ -24,7 +24,7 @@ public class Simulation {
 		for (int i = 0; i < count; i++) {
 			begin.countDown();
 		}
-		exec.shutdown();
+		exec.shutdown();*/
 	}
 
 	public static CountDownLatch getBegin(){

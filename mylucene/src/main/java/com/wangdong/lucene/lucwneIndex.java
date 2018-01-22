@@ -60,7 +60,7 @@ public class lucwneIndex {
 		indexWriter = new IndexWriter(directory, indexWriterConfig);
 
 		//多线程并发问题模拟下面程序开启了多个IndexWriter，都没有关闭，执行结果抛出异常：
-		List<Runnable> runnableList=new ArrayList<>();
+		List<Runnable> runnableList=new ArrayList<Runnable>();
 		for (int i = 0; i < 9; i++) {
 			final int NO = i + 1;
 			Runnable runnable = new Runnable() {
