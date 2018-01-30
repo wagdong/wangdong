@@ -4,9 +4,9 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 对CyclicBarrier的学习
+ * CyclicBarrier
+ * 共享锁
  * 源码简单分析
- * 1.总体上 是通过reentLock wait 和 notifAll 思想进行等到同步能执行   底层是也是for(;;) 循环进行处理 不断监听判断
  * @author 汪冬
  * @Date 2018/1/28
  */

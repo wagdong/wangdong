@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 对CountDownLatch的学习
+ * CountDownLatch
+ * 共享锁
  * <li>为了实现所有线程等待最终的某个条件触发<li/>
  * 类似的功能 例如 @see java.util.concurrent.CyclicBarrier
  * @author 汪冬
