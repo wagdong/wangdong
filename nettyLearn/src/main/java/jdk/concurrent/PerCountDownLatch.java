@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * CountDownLatch
- * 共享锁
+ * 共享锁 如果条件不够满足 就一直在全局node 里面等待  直到触发
  * <li>为了实现所有线程等待最终的某个条件触发<li/>
  * 类似的功能 例如 @see java.util.concurrent.CyclicBarrier
  * @author 汪冬
@@ -28,11 +28,6 @@ public class PerCountDownLatch {
 				@Override
 				public void run() {
 					try {
-						/**
-						 * 可能是Aqs思想
-						 * 源码分析总体思想是加入全局的node 链表里面where(true) 检测触发条件 state=0 或者 Time<=0
-						 * 释放阻塞全部 线程
-						 */
 						countDownLatch.await();
 						TimeUnit.SECONDS.sleep(2);
 						System.out.println("count"+atomicInteger.incrementAndGet());

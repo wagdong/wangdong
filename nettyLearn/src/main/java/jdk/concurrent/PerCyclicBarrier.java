@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * CyclicBarrier
- * 共享锁
+ * 共享锁  采用了lock锁 在外围  没有获得lock  线程就一直等待 交给ReentrantLock 控制
  * 源码简单分析
  * @author 汪冬
  * @Date 2018/1/28
