@@ -1,15 +1,18 @@
 package jdk.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 /**
  * @author 汪冬
@@ -32,8 +35,10 @@ public class NettyClient {
 						@Override
 						public void initChannel(SocketChannel ch)
 								throws Exception {
-							ch.pipeline().addLast(
-									new EchoClientHandler());
+							ch.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
+							ch.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
+							ch.pipeline().addLast(new EchoClientHandler());
+
 						}
 					});
 
@@ -48,10 +53,16 @@ public class NettyClient {
 				e.printStackTrace();
 			}
 		}
+
+		ArrayList<String> strings = new ArrayList<String>() {
+			{
+				add("1");
+			}
+		};
 	}
 
 	//channelRegistered -->channelActive-->channelInactive-->channelUnregistered
-	class  EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+	class EchoClientHandler extends SimpleChannelInboundHandler<String> {
 		@Override
 		public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 			System.out.println("EchoClientHandler channelRegistered...");
@@ -60,19 +71,17 @@ public class NettyClient {
 
 		@Override
 		public void channelActive(ChannelHandlerContext ctx) {
-			System.out.println( 1);
+			System.out.println(1);
 			ctx.writeAndFlush(Unpooled.copiedBuffer("Netty rocks!", //2
 					CharsetUtil.UTF_8));
 		}
 
 		@Override
 		public void channelRead0(ChannelHandlerContext ctx,
-								 ByteBuf in) {
-			System.out.println( 2);
-			System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));    //3
-			ctx.writeAndFlush(Unpooled.copiedBuffer("Netty rocks2!", //2
-					CharsetUtil.UTF_8));
-
+								 String in) {
+			System.out.println(2);
+			System.out.println("Client received: " + in);    //3
+			ctx.writeAndFlush("Netty rocks2!");
 		}
 
 		@Override

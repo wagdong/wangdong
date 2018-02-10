@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="nioAndConcurrent:war exploded">
+    <output-path>$PROJECT_DIR$/nettyLearn/target/nettyLearn</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="nioAndConcurrent" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: junit:junit:4.12" />
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.4" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: io.netty:netty-all:4.0.0.Final" />
+          <element id="library" level="project" name="Maven: org.apache.mina:mina-core:2.0.16" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/nioAndConcurrent/target/nettyLearn/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="nioAndConcurrent/web/Web" />
+    </root>
+  </artifact>
+</component>

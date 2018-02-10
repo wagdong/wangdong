@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nioAndConcurrent:war">
+    <output-path>$PROJECT_DIR$/nettyLearn/target</output-path>
+    <root id="archive" name="nettyLearn.war">
+      <element id="artifact" artifact-name="nioAndConcurrent:war exploded" />
+    </root>
+  </artifact>
+</component>
