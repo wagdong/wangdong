@@ -32,8 +32,6 @@ public class CacheNode {
 				if(last==null){
 					last=node;
 				}
-
-
 			}else {
 				node.next=first;
 				node.prev=null;
