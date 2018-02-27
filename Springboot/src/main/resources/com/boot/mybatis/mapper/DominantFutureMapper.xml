@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.boot.mybatis.mapper.DominantFutureMapper">
+  <cache/>
+
+  <resultMap id="BaseResultMap" type="com.boot.mybatis.domian.DominantFuture" >
+    <id column="id" property="id"  />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id,code
+  </sql>
+
+  <select id="findAll" resultMap="BaseResultMap"  useCache="true">
+    SELECT id,code FROM qh_dominant_future
+  </select>
+
+
+  <select id="findByCode" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from qh_dominant_future
+    where code = #{code}
+  </select>
+
+</mapper>
