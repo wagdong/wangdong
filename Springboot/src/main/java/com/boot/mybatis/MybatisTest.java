@@ -10,9 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class MybatisTest {
 		System.out.println(all.size());
 		session.close();
 		SqlSession sessionNew = sqlSession.openSession(true);
-		mapper=sessionNew.getMapper(DominantFutureMapper.class);
+		mapper = sessionNew.getMapper(DominantFutureMapper.class);
 		System.out.println(mapper.findAll().size());
 		sessionNew.close();
 
